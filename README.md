@@ -59,6 +59,7 @@ It's pretty limited but it's a start.
       sslcert     => 'my ssl cert',
       sslchain    => 'my ssl chain',
       server_name => 'status.example.com',
+      env_file    => template('mymodule/env.erb'),
     }
 
 ## Reference
@@ -135,6 +136,10 @@ String. The actual SSL cert to pass to Apache (probably you want to store that i
 ##### sslchain
 
 String. The optional SSL cert chain to pass to Apache (probably you want to store that in hiera or in your module).
+
+##### env_file
+
+String. Content of the env file (possibly coming from an erb from the calling manifest).
 
 ## Limitations
 
