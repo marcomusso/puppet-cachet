@@ -37,8 +37,12 @@
 # [*server_name*]
 #   String. The FQDN of the webserver vhost that will serve the application.
 #
+# [*env_file*]
+#   String. Content of the env file (possibly coming from an erb from the calling manifest).
+#
 
 class cachet (
+  $env_file,
   $manage_repo       = $::cachet::params::manage_repo,
   $database_host     = $::cachet::params::database_host,
   $database_port     = $::cachet::params::database_port,
@@ -57,6 +61,7 @@ class cachet (
 
   validate_re($repo_url, '^https?:\/\/.+', 'repo_url must be a url')
   validate_string($git_branch)
+  validate_string($env_file)
   validate_re($install_dir, '^/.+','Install dir must be a full path')
   validate_string($server_name)
 
@@ -76,6 +81,7 @@ class cachet (
   class { '::cachet::config':
     server_name       => $server_name,
     install_dir       => $install_dir,
+    env_file          => $env_file,
     database_host     => $database_host,
     database_port     => $database_port,
     database_name     => $database_name,
