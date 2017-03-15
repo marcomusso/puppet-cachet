@@ -1,0 +1,33 @@
+stages:
+  - deploy
+  - test
+
+deploy_module:
+  stage: deploy
+  script:
+    - momcorp sync module cachet
+  allow_failure: true
+
+'unit-puppet-3':
+  stage: test
+  script:
+    - bundle install --without development system_tests
+    - bundle exec rake validate
+    - bundle exec rake lint
+    - bundle exec rake spec SPEC_OPTS='--format documentation'
+  tags:
+  except:
+    - tags
+
+'unit-puppet-4':
+  stage: test
+  script:
+    - export PUPPET_GEM_VERSION='~> 4.2'
+    - export STRICT_VARIABLES='yes'
+    - bundle install --without development system_tests
+    - bundle exec rake validate
+    - bundle exec rake lint
+    - bundle exec rake spec SPEC_OPTS='--format documentation'
+  tags:
+  except:
+    - tags

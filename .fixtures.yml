@@ -1,0 +1,9 @@
+fixtures:
+  forge_modules:
+    vcsrepo: 'puppetlabs/vcsrepo'
+    apache: 'puppetlabs/apache'
+    concat: 'puppetlabs/concat'
+    firewall: 'puppetlabs/firewall'
+    stdlib: 'puppetlabs/stdlib'
+  symlinks:
+    cachet: "#{source_dir}"

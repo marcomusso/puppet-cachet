@@ -1,0 +1,33 @@
+{
+  "name": "puppet-cachet",
+  "version": "0.1.0",
+  "author": "Marco Musso",
+  "summary": "Installs a Cachet status page",
+  "license": "Apache-2.0",
+  "source": "https://github.com/marcomusso/puppet-cachet",
+  "project_page": "https://github.com/marcomusso/puppet-cachet/wiki",
+  "issues_url": "https://github.com/marcomusso/puppet-cachet/issues",
+  "requirements": [
+    { "name": "puppet", "version_requirement": "3.x" }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 3.0.0 < 5.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ]
+}

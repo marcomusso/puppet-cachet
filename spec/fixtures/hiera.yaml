@@ -1,0 +1,21 @@
+---
+:backends:
+  - yaml
+:logger: console
+:yaml:
+  :datadir: ./spec/fixtures/hieradata
+:hierarchy:
+  - application/%{::application}/nodes/%{::clientcert}
+  - application/%{::application}/%{::zone}/%{::environment}
+  - application/%{::application}/%{::zone}/%{::service_level}
+  - application/%{::application}/%{::environment}
+  - application/%{::application}/%{::service_level}
+  - application/%{::application}/%{::zone}
+  - application/%{::application}/%{::role}
+  - application/%{::application}
+  - service_level/%{::service_level}
+  - zone/%{::zone}
+  - os/%{::osfamily}/%{::operatingsystem}/%{::operatingsystemmajrelease}
+  - os/%{::osfamily}/%{::operatingsystem}
+  - os/%{::osfamily}
+  - common

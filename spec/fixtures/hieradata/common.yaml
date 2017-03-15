@@ -1,0 +1,7 @@
+---
+cachet::apache::sslkey: 'YOUR ENCRYPTED SSL KEY'
+
+cachet::database_host: 'database.example.com'
+cachet::database_name: 'cachet'
+cachet::database_user: 'cachet'
+cachet::database_password: 'YOUR ENCRYPTED PASSWORD'
