@@ -9,6 +9,7 @@ class cachet::apache (
   $sslchain,
   $server_name,
   $install_dir,
+  $purge_configs = true,
   ) {
 
   validate_string($sslkey)
@@ -20,7 +21,7 @@ class cachet::apache (
   class { '::apache':
     default_vhost => true,
     default_mods  => false,
-    purge_configs => false,
+    purge_configs => $purge_configs,
     mpm_module    => false,
   }
   class { '::apache::mod::event':
@@ -33,6 +34,7 @@ class cachet::apache (
   include ::apache::mod::status
   include ::apache::mod::rewrite
   include ::apache::mod::autoindex
+  include ::apache::mod::setenvif
 
   file { '/etc/httpd/conf.d/mydomain.key':
     owner   => 'apache',
