@@ -45,28 +45,26 @@ describe 'cachet' do
                 'env_file'    => "APP_ENV=productionAPP_DEBUG=false\nAPP_URL=https://status.example.com\nAPP_KEY=\n",
               }
             end
-            it { is_expected.to contain_package('Installs source yumrepo for postgres96') }
-            it { is_expected.to contain_exec('Add Webtatic GPG key') }
-            it { is_expected.to contain_yumrepo('webtatic') }
+            it { is_expected.to contain_package('pgdg-centos96-9.6-3.noarch') }
+            it { is_expected.to contain_package('webtatic-release') }
           end
           it { is_expected.to contain_package('git') }
           it { is_expected.to contain_package('curl') }
           it { is_expected.to contain_package('sqlite') }
           it { is_expected.to contain_package('postgresql96') }
-          it { is_expected.to contain_package('php55w') }
-          it { is_expected.to contain_package('php55w-gd') }
-          it { is_expected.to contain_package('php55w-pdo') }
-          it { is_expected.to contain_package('php55w-xml') }
-          it { is_expected.to contain_package('php55w-pgsql') }
-          it { is_expected.to contain_package('php55w-mbstring') }
-          it { is_expected.to contain_package('php55w-opcache') }
+          it { is_expected.to contain_package('php71w') }
+          it { is_expected.to contain_package('php71w-gd') }
+          it { is_expected.to contain_package('php71w-pdo') }
+          it { is_expected.to contain_package('php71w-xml') }
+          it { is_expected.to contain_package('php71w-pgsql') }
+          it { is_expected.to contain_package('php71w-mbstring') }
+          it { is_expected.to contain_package('php71w-opcache') }
           it { is_expected.to contain_vcsrepo('/opt/cachet').with_ensure('present') }
           it { is_expected.to contain_exec('Install Composer') }
           it { is_expected.to contain_exec('Install Cachet prerequisites') }
           it { is_expected.to contain_class('cachet::install') }
 
           # cachet::config
-          it { is_expected.to contain_package('php55w-mbstring') }
           it { is_expected.to contain_file('/opt/cachet/database/database.sqlite') }
           it { is_expected.to contain_file('/opt/cachet/.env') }
           it { is_expected.to contain_exec('Application install and key generation') }

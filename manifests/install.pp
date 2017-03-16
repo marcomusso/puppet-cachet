@@ -20,35 +20,31 @@ class cachet::install(
   ]
 
   if $manage_repo {
-    # TODO add repo for postgres96 and exclude postgres for base repos
+    # TODO exclude postgres from base repos
     #   On CentOS: /etc/yum.repos.d/CentOS-Base.repo, [base] and [updates] sections => exclude=postgresql*
-    # Note: this requires epel
-    package { 'Installs source yumrepo for postgres96':
-      ensure => present,
-      source => 'https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm',
+    package { 'pgdg-centos96-9.6-3.noarch':
+      ensure   => present,
+      provider => 'rpm',
+      source   => 'https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm',
     }
-    exec { 'Add Webtatic GPG key':
-      command => '/bin/curl -o /etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7 https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7',
-      creates => '/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7',
-    } ->
-    yumrepo { 'webtatic':
-      ensure  => present,
-      baseurl => 'https://repo.webtatic.com/yum/el7/x86_64/',
-      enabled => true,
-      gpgkey  => 'RPM-GPG-KEY-webtatic-el7',
+    # Note: this requires epel
+    package { 'webtatic-release':
+      ensure   => present,
+      provider => 'rpm',
+      source   => 'https://mirror.webtatic.com/yum/el7/webtatic-release.rpm',
     }
   }
   package { $prerequisites:
     ensure => latest,
   } ->
   package { [
-    'php55w',
-    'php55w-gd',
-    'php55w-pdo',
-    'php55w-xml',
-    'php55w-pgsql',
-    'php55w-mbstring',
-    'php55w-opcache',
+    'php71w',
+    'php71w-gd',
+    'php71w-pdo',
+    'php71w-xml',
+    'php71w-pgsql',
+    'php71w-mbstring',
+    'php71w-opcache',
     ]:
     ensure => latest,
     notify => Class[Apache::Service],
