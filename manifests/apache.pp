@@ -53,14 +53,16 @@ class cachet::apache (
     content => $sslchain,
   } ->
   ::apache::vhost { $server_name:
-    servername  => $server_name,
-    port        => 443,
-    ssl         => true,
-    ssl_key     => '/etc/httpd/conf.d/mydomain.key',
-    ssl_cert    => '/etc/httpd/conf.d/mydomain.crt',
-    ssl_chain   => '/etc/httpd/conf.d/chain.crt',
-    docroot     => "${::cachet::install_dir}/public",
-    directories => [
+    servername    => $server_name,
+    port          => 443,
+    ssl           => true,
+    ssl_key       => '/etc/httpd/conf.d/mydomain.key',
+    ssl_cert      => '/etc/httpd/conf.d/mydomain.crt',
+    ssl_chain     => '/etc/httpd/conf.d/chain.crt',
+    docroot       => "${::cachet::install_dir}/public",
+    docroot_owner => 'apache',
+    docroot_group => 'apache',
+    directories   => [
       {
         path           => "${::cachet::install_dir}/public",
         order          => 'Allow,Deny',

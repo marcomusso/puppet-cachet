@@ -32,8 +32,8 @@ class cachet::config(
   } ->
   file { "${install_dir}/.env":
     ensure  => file,
-    owner   => 'root',
-    group   => 'root',
+    owner   => 'apache',
+    group   => 'apache',
     mode    => '0640',
     content => $env_file,
     replace => false,
