@@ -23,9 +23,6 @@ class cachet::apache (
     default_mods  => false,
     purge_configs => $purge_configs,
   }
-  class { '::apache::mod::php':
-    package_name => 'mod_php71w',
-  }
 
   include ::apache::mod::ssl
   include ::apache::mod::dir

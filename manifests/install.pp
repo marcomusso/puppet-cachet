@@ -38,6 +38,7 @@ class cachet::install(
     ensure => latest,
   } ->
   package { [
+    'mod_php71w',
     'php71w-cli',
     'php71w-gd',
     'php71w-pdo',
