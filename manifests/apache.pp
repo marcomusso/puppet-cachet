@@ -9,7 +9,7 @@ class cachet::apache (
   $sslchain,
   $server_name,
   $install_dir,
-  $purge_configs = true,
+  $purge_configs = false,
   ) {
 
   validate_string($sslkey)
@@ -22,11 +22,9 @@ class cachet::apache (
     default_vhost => true,
     default_mods  => false,
     purge_configs => $purge_configs,
-    mpm_module    => false,
   }
-  class { '::apache::mod::event':
-    maxrequestworkers => 1000,
-    serverlimit       => 1000,
+  class { '::apache::mod::php':
+    package_name => 'mod_php71w',
   }
 
   include ::apache::mod::ssl

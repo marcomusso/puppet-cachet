@@ -29,6 +29,7 @@ describe 'cachet' do
           it { is_expected.to contain_class('cachet::params') }
 
           # cachet::apache
+          it { is_expected.to contain_package('mod_php71w') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/mydomain.key') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/mydomain.crt') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/chain.crt') }
@@ -52,7 +53,6 @@ describe 'cachet' do
           it { is_expected.to contain_package('curl') }
           it { is_expected.to contain_package('sqlite') }
           it { is_expected.to contain_package('postgresql96') }
-          it { is_expected.to contain_package('mod_php71w') }
           it { is_expected.to contain_package('php71w-cli') }
           it { is_expected.to contain_package('php71w-gd') }
           it { is_expected.to contain_package('php71w-pdo') }
