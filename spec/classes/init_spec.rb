@@ -38,7 +38,7 @@ describe 'cachet' do
           it { is_expected.to contain_class('cachet::apache') }
 
           # cachet::install
-          context "If manage repo is true" do
+          context "If manage_repo is true" do
             let(:params) do
               {
                 'manage_repo' => true,
@@ -52,7 +52,8 @@ describe 'cachet' do
           it { is_expected.to contain_package('curl') }
           it { is_expected.to contain_package('sqlite') }
           it { is_expected.to contain_package('postgresql96') }
-          it { is_expected.to contain_package('php71w') }
+          it { is_expected.to contain_package('mod_php71w') }
+          it { is_expected.to contain_package('php71w-cli') }
           it { is_expected.to contain_package('php71w-gd') }
           it { is_expected.to contain_package('php71w-pdo') }
           it { is_expected.to contain_package('php71w-xml') }
