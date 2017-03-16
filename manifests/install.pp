@@ -60,8 +60,9 @@ class cachet::install(
     require  => [ Package['git'] ],
   } ->
   exec { 'Install Composer':
-    command => '/bin/curl -sS https://getcomposer.org/installer | /bin/php -- --install-dir=/usr/local/bin --filename=composer',
-    unless  => '/bin/test -x /usr/local/bin/composer',
+    command     => '/bin/curl -sS https://getcomposer.org/installer | /bin/php -- --install-dir=/usr/local/bin --filename=composer',
+    unless      => '/bin/test -x /usr/local/bin/composer',
+    environment => "HOME=${install_dir}",
   } ->
   exec { 'Install Cachet prerequisites':
     command     => '/bin/php /usr/local/bin/composer install --no-dev -o',
