@@ -70,14 +70,16 @@ class cachet (
     git_branch  => $git_branch,
     install_dir => $install_dir,
     manage_repo => $manage_repo,
-  } ->
+  }
+
   class { '::cachet::apache':
     server_name => $server_name,
     sslkey      => $sslkey,
     sslcert     => $sslcert,
     sslchain    => $sslchain,
     install_dir => $install_dir,
-  } ->
+  }
+
   class { '::cachet::config':
     server_name       => $server_name,
     install_dir       => $install_dir,
@@ -88,6 +90,7 @@ class cachet (
     database_user     => $database_user,
     database_password => $database_password,
     database_prefix   => $database_prefix,
-  } ~>
-  Class['::cachet']
+  }
+
+  Class['::cachet::install'] -> Class['::cachet::apache'] -> Class['::cachet::config'] ~> Class['::cachet']
 }

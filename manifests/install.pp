@@ -36,8 +36,8 @@ class cachet::install(
   }
   package { $prerequisites:
     ensure => latest,
-  } ->
-  package { [
+  }
+  -> package { [
     'mod_php71w',
     'php71w-cli',
     'php71w-gd',
@@ -49,8 +49,8 @@ class cachet::install(
     ]:
     ensure => latest,
     notify => Class[Apache::Service],
-  } ->
-  vcsrepo { $install_dir:
+  }
+  -> vcsrepo { $install_dir:
     ensure   => present,
     provider => git,
     source   => $repo_url,
@@ -58,13 +58,13 @@ class cachet::install(
     owner    => 'apache',
     group    => 'apache',
     require  => [ Package['git'] ],
-  } ->
-  exec { 'Install Composer':
+  }
+  -> exec { 'Install Composer':
     command     => '/bin/curl -sS https://getcomposer.org/installer | /bin/php -- --install-dir=/usr/local/bin --filename=composer',
     unless      => '/bin/test -x /usr/local/bin/composer',
     environment => "HOME=${install_dir}",
-  } ->
-  exec { 'Install Cachet prerequisites':
+  }
+  -> exec { 'Install Cachet prerequisites':
     command     => '/bin/php /usr/local/bin/composer install --no-dev -o',
     environment => "COMPOSER_HOME=${install_dir}/.composer",  # needed by composer
     creates     => "${install_dir}/vendor",

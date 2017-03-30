@@ -36,26 +36,52 @@ class cachet::apache (
     group   => 'apache',
     mode    => '0640',
     content => $sslkey,
-  } ->
+  }
+
   file { '/etc/httpd/conf.d/mydomain.crt':
     owner   => 'apache',
     group   => 'apache',
     mode    => '0640',
     content => $sslcert,
-  } ->
+  }
+
   file { '/etc/httpd/conf.d/chain.crt':
     owner   => 'apache',
     group   => 'apache',
     mode    => '0640',
     content => $sslchain,
-  } ->
-  ::apache::vhost { $server_name:
+  }
+
+  ::apache::vhost { "${server_name}_ssl":
     servername    => $server_name,
     port          => 443,
     ssl           => true,
     ssl_key       => '/etc/httpd/conf.d/mydomain.key',
     ssl_cert      => '/etc/httpd/conf.d/mydomain.crt',
     ssl_chain     => '/etc/httpd/conf.d/chain.crt',
+    docroot       => "${::cachet::install_dir}/public",
+    docroot_owner => 'apache',
+    docroot_group => 'apache',
+    directories   => [
+      {
+        path           => "${::cachet::install_dir}/public",
+        order          => 'Allow,Deny',
+        allow          => 'from all',
+        options        => ['Indexes','FollowSymLinks'],
+        allow_override => ['All'],
+        index_options  => ['FancyIndexing'],
+      },
+    ],
+    require       => [
+      File['/etc/httpd/conf.d/mydomain.key'],
+      File['/etc/httpd/conf.d/mydomain.crt'],
+    ],
+  }
+
+  ::apache::vhost { $server_name:
+    servername    => $server_name,
+    port          => 80,
+    ssl           => false,
     docroot       => "${::cachet::install_dir}/public",
     docroot_owner => 'apache',
     docroot_group => 'apache',
@@ -77,6 +103,7 @@ class cachet::apache (
     state  => 'NEW',
     action => 'accept',
   }
+
   firewall { '244 apache ssl':
     dport  => 443,
     proto  => 'tcp',

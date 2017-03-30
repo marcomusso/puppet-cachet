@@ -33,6 +33,10 @@ describe 'cachet' do
           it { is_expected.to contain_file('/etc/httpd/conf.d/mydomain.key') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/mydomain.crt') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/chain.crt') }
+          it { is_expected.to contain_apache__vhost(params['server_name'] + '_ssl').with({
+            'docroot_owner' => 'apache',
+            'docroot_group' => 'apache',
+            }) }
           it { is_expected.to contain_apache__vhost(params['server_name']).with({
             'docroot_owner' => 'apache',
             'docroot_group' => 'apache',

@@ -29,16 +29,16 @@ class cachet::config(
     owner  => 'apache',
     group  => 'apache',
     mode   => '0664',
-  } ->
-  file { "${install_dir}/.env":
+  }
+  -> file { "${install_dir}/.env":
     ensure  => file,
     owner   => 'apache',
     group   => 'apache',
     mode    => '0640',
     content => $env_file,
     replace => false,
-  } ->
-  exec { 'Application install and key generation':
+  }
+  -> exec { 'Application install and key generation':
     command => "/bin/php artisan app:install && /bin/touch ${install_dir}/.APP-IS-INSTALLED",
     path    => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
     cwd     => $install_dir,
