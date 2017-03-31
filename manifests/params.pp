@@ -8,6 +8,7 @@ class cachet::params {
   case $::osfamily {
     'RedHat': {
       $manage_repo       = false
+      $manage_apache     = true
       $sslkey            = 'my ssl key'
       $sslcert           = 'my ssl cert'
       $sslchain          = 'my ssl chain'
