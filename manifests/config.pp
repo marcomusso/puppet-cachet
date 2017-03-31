@@ -43,8 +43,8 @@ class cachet::config(
     path    => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
     cwd     => $install_dir,
     creates => "${install_dir}/.APP-IS-INSTALLED",
-  } ->
-  file { "${install_dir}/storage":
+  }
+  -> file { "${install_dir}/storage":
     ensure => directory,
     owner  => 'apache',
     group  => 'apache',
