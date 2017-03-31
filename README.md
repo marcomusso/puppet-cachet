@@ -62,6 +62,9 @@ It's pretty limited but it's a start.
       env_file    => template('mymodule/env.erb'),
     }
 
+You can avoid installing apache (and provide your own web server with php support) by setting `manage_apache => false`.
+The env file is basically Cachet configuration file, you should provide it with your values (sql backend, SMTP server, ...).
+
 ## Reference
 
 Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)

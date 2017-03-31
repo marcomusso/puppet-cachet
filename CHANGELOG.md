@@ -1,3 +1,7 @@
+## 2017-03-16 Release 0.1.2
+
+Added option to optionally install Apache.
+
 ## 2017-03-16 Release 0.1.1
 
 - changed ownership of docroot and env file to avoid conflit with vcsrepo resource
