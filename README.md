@@ -53,17 +53,23 @@ It's pretty limited but it's a start.
 ## Usage
 
     class { '::cachet':
-      manage_repo => true,
-      server_name => 'status.mydomain.com',
-      sslkey      => 'my ssl key',
-      sslcert     => 'my ssl cert',
-      sslchain    => 'my ssl chain',
-      server_name => 'status.example.com',
-      env_file    => template('mymodule/env.erb'),
+      manage_repo       => true,
+      server_name       => 'status.mydomain.com',
+      database_host     => 'mydatabasehost.example.com',
+      database_port     => '5432',
+      database_name     => 'my_status_page',
+      database_user     => 'my_status_page_ser',
+      database_password => 'my_status_page_assword',
+      sslkey            => 'my ssl key',
+      sslcert           => 'my ssl cert',
+      sslchain          => 'my ssl chain',
     }
 
-You can avoid installing apache (and provide your own web server with php support) by setting `manage_apache => false`.
-The env file is basically Cachet configuration file, you should provide it with your values (sql backend, SMTP server, ...).
+You can avoid installing apache (and provide your own web server with php support) by setting `manage_apache => false` but if you do you need to supply you cert/key/chain file **contents** (not a path to a file!).
+
+The Cachet configuration (env file) will be created based on the template and the values supplied as the class attributes (see `init.pp`, more to come).
+
+APP_KEY will be generated during application installation (in v2.3.x).
 
 ## Reference
 
