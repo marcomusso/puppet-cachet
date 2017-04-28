@@ -122,7 +122,7 @@ class cachet::install(
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "cachet_version=${git_branch}",
+    content => "cachet_version=${git_branch}\n",
     require => Vcsrepo[$install_dir],
   }
 }
