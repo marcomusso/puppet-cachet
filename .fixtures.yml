@@ -2,8 +2,13 @@ fixtures:
   forge_modules:
     vcsrepo: 'puppetlabs/vcsrepo'
     apache: 'puppetlabs/apache'
-    concat: 'puppetlabs/concat'
+    concat:
+      repo: 'puppetlabs/concat'
+      ref: '2.2.0'
     firewall: 'puppetlabs/firewall'
     stdlib: 'puppetlabs/stdlib'
+    selinux:
+      repo: 'puppet/selinux'
+      ref: '0.8.0'
   symlinks:
     cachet: "#{source_dir}"

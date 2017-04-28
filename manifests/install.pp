@@ -10,8 +10,6 @@ class cachet::install(
   $git_branch,
   ) {
 
-  # TODO: support updates (https://docs.cachethq.io/docs/updating-cachet)
-
   $prerequisites = [
     'git',
     'curl',
@@ -50,24 +48,81 @@ class cachet::install(
     ensure => latest,
     notify => Class[Apache::Service],
   }
-  -> vcsrepo { $install_dir:
-    ensure   => present,
-    provider => git,
-    source   => $repo_url,
-    revision => $git_branch,
-    owner    => 'apache',
-    group    => 'apache',
-    require  => [ Package['git'] ],
+
+  if ((getvar('cachet_version') != undef) and (versioncmp($git_branch, getvar('cachet_version')) > 0)) {
+    notify { 'A new version has been required: upgrading.':
+      withpath => true,
+    }
+    exec {'Enable maintenance mode':
+      command => 'php artisan down',
+      path    => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
+      cwd     => $install_dir,
+    }
+    -> vcsrepo { $install_dir:
+      ensure   => present,
+      provider => git,
+      source   => $repo_url,
+      revision => $git_branch,
+      owner    => 'apache',
+      group    => 'apache',
+      require  => [
+        Package['git'],
+        Package['mod_php71w'],
+      ],
+    }
+    -> exec {'Update prerequisites':
+      command     => '/usr/local/bin/composer install --no-dev -o --no-scripts',
+      path        => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
+      cwd         => $install_dir,
+      environment => "COMPOSER_HOME=${install_dir}/.composer",  # needed by composer
+    }
+    -> exec {'Update application':
+      command => 'php artisan app:update',
+      path    => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
+      cwd     => $install_dir,
+    }
+    -> exec {'Disable maintenance mode':
+      command => 'php artisan up',
+      path    => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
+      cwd     => $install_dir,
+    }
+    -> exec {'Clean cache':
+      command => 'rm -rf bootstrap/cache/*',
+      path    => '/usr/pgsql-9.6/bin:/usr/bin:/usr/sbin:/bin',
+      cwd     => $install_dir,
+    }
+  } else {
+    vcsrepo { $install_dir:
+      ensure   => present,
+      provider => git,
+      source   => $repo_url,
+      revision => $git_branch,
+      owner    => 'apache',
+      group    => 'apache',
+      require  => [
+        Package['git'],
+        Package['mod_php71w'],
+      ],
+    }
+    -> exec { 'Install Composer':
+      command     => '/bin/curl -sS https://getcomposer.org/installer | /bin/php -- --install-dir=/usr/local/bin --filename=composer',
+      unless      => '/bin/test -x /usr/local/bin/composer',
+      environment => "HOME=${install_dir}",
+    }
+    -> exec { 'Install Cachet prerequisites':
+      command     => '/bin/php /usr/local/bin/composer install --no-dev -o',
+      environment => "COMPOSER_HOME=${install_dir}/.composer",  # needed by composer
+      creates     => "${install_dir}/vendor",
+      cwd         => $install_dir,
+    }
   }
-  -> exec { 'Install Composer':
-    command     => '/bin/curl -sS https://getcomposer.org/installer | /bin/php -- --install-dir=/usr/local/bin --filename=composer',
-    unless      => '/bin/test -x /usr/local/bin/composer',
-    environment => "HOME=${install_dir}",
-  }
-  -> exec { 'Install Cachet prerequisites':
-    command     => '/bin/php /usr/local/bin/composer install --no-dev -o',
-    environment => "COMPOSER_HOME=${install_dir}/.composer",  # needed by composer
-    creates     => "${install_dir}/vendor",
-    cwd         => $install_dir,
+
+  file { '/etc/facter/facts.d/cachet_version.txt':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "cachet_version=${git_branch}",
+    require => Vcsrepo[$install_dir],
   }
 }

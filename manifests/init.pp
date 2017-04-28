@@ -40,12 +40,17 @@
 # [*server_name*]
 #   String. The FQDN of the webserver vhost that will serve the application.
 #
-# [*env_file*]
-#   String. Content of the env file (possibly coming from an erb from the calling manifest).
+# [*mail_host*]
+#   String. Your email relay host.
+#
+# [*mail_address*]
+#   String. The email address from which Cachet will comminicate to subscribers. (default: null)
+#   If this is null no "Subscribe" button will appear in the main page.
 #
 
 class cachet (
-  $env_file,
+  $mail_host         = $::cachet::params::mail_host,
+  $mail_address      = $::cachet::params::mail_address,
   $manage_repo       = $::cachet::params::manage_repo,
   $manage_apache     = $::cachet::params::manage_apache,
   $database_host     = $::cachet::params::database_host,
@@ -67,7 +72,7 @@ class cachet (
   validate_bool($manage_repo)
   validate_bool($manage_apache)
   validate_string($git_branch)
-  validate_string($env_file)
+  validate_string($mail_host)
   validate_re($install_dir, '^/.+','Install dir must be a full path')
   validate_string($server_name)
 
@@ -91,13 +96,15 @@ class cachet (
   class { '::cachet::config':
     server_name       => $server_name,
     install_dir       => $install_dir,
-    env_file          => $env_file,
+    mail_host         => $mail_host,
+    mail_address      => $mail_address,
     database_host     => $database_host,
     database_port     => $database_port,
     database_name     => $database_name,
     database_user     => $database_user,
     database_password => $database_password,
     database_prefix   => $database_prefix,
+    git_branch        => $git_branch,
   }
 
   Class['::cachet::install'] -> Class['::cachet::config'] ~> Class['::cachet']

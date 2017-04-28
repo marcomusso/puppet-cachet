@@ -4,7 +4,6 @@
 #
 
 class cachet::config(
-  $env_file,
   $install_dir,
   $server_name,
   $database_host,
@@ -13,6 +12,9 @@ class cachet::config(
   $database_user,
   $database_password,
   $database_prefix,
+  $git_branch,
+  $mail_host,
+  $mail_address,
   ) {
 
   if $database_host != '' {
@@ -35,7 +37,7 @@ class cachet::config(
     owner   => 'apache',
     group   => 'apache',
     mode    => '0640',
-    content => $env_file,
+    content => template('cachet/env.erb'),
     replace => false,
   }
   -> exec { 'Application install and key generation':

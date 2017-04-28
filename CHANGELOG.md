@@ -1,3 +1,11 @@
+## 2017-04-28 Release 0.2.0
+
+Support for upgrades and custom fact `cachet_version`.
+
+## 2017-03-16 Release 0.1.3
+
+Moved `.env` inside the module, will support all options in the future.
+
 ## 2017-03-16 Release 0.1.2
 
 Added option to optionally install Apache.

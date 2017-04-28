@@ -14,8 +14,7 @@ describe 'cachet' do
               'server_name' => 'status.example.com',
               'install_dir' => '/opt/cachet',
               'repo_url'    => 'http://github.com/...',
-              'git_branch'  => 'v2.3.10',
-              'env_file'    => "APP_ENV=productionAPP_DEBUG=false\nAPP_URL=https://status.example.com\nAPP_KEY=\n",
+              'git_branch'  => 'v2.3.11',
             }
           end
           let(:facts) do
@@ -50,7 +49,6 @@ describe 'cachet' do
             let(:params) do
               {
                 'manage_repo' => true,
-                'env_file'    => "APP_ENV=productionAPP_DEBUG=false\nAPP_URL=https://status.example.com\nAPP_KEY=\n",
               }
             end
             it { is_expected.to contain_package('pgdg-centos96-9.6-3.noarch') }
@@ -71,6 +69,7 @@ describe 'cachet' do
           it { is_expected.to contain_exec('Install Composer') }
           it { is_expected.to contain_exec('Install Cachet prerequisites') }
           it { is_expected.to contain_class('cachet::install') }
+          it { is_expected.to contain_file('/etc/facter/facts.d/cachet_version.txt') }
 
           # cachet::config
           it { is_expected.to contain_file('/opt/cachet/database/database.sqlite') }
