@@ -50,7 +50,7 @@ class cachet::install(
   }
 
   if ((getvar('cachet_version') != undef) and (versioncmp($git_branch, getvar('cachet_version')) > 0)) {
-    notify { 'A new version has been required: upgrading.':
+    notify { "A new version (${git_branch}) has been requested: upgrading.":
       withpath => true,
     }
     exec {'Enable maintenance mode':
@@ -92,6 +92,9 @@ class cachet::install(
       cwd     => $install_dir,
     }
   } else {
+    notify { "No new version has been requetest, still using ${git_branch}.":
+      withpath => true,
+    }
     vcsrepo { $install_dir:
       ensure   => present,
       provider => git,
