@@ -49,7 +49,9 @@ class cachet::install(
     notify => Class[Apache::Service],
   }
 
-  if ((getvar('cachet_version') != undef) and (versioncmp($git_branch, getvar('cachet_version')) > 0)) {
+  # remove 'v' from the beginning of the strings as releases are tagged like 'v2.3.11'
+  $requested_version = regsubst($git_branch, '^.(.*)$', '\1')
+  if ((getvar('cachet_version') != undef) and (versioncmp($requested_version, getvar('cachet_version')) > 0)) {
     notify { "A new version (${git_branch}) has been requested: upgrading.":
       withpath => true,
     }
