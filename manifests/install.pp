@@ -50,8 +50,8 @@ class cachet::install(
   }
 
   # remove 'v' from the beginning of the strings as releases are tagged like 'v2.3.11'
-  $requested_version = regsubst($git_branch, '^.(.*)$', '\1')
-  if ((getvar('cachet_version') != undef) and (versioncmp($requested_version, getvar('cachet_version')) > 0)) {
+  # $requested_version = regsubst($git_branch, '^.(.*)$', '\1')
+  if ((getvar('cachet_version') != undef) and (versioncmp($git_branch, getvar('cachet_version')) > 0)) {
     notify { "A new version (${git_branch}) has been requested: upgrading.":
       withpath => true,
     }
@@ -94,7 +94,7 @@ class cachet::install(
       cwd     => $install_dir,
     }
   } else {
-    notify { "No new version has been requetest, still using ${git_branch}.":
+    notify { "Installing version ${git_branch}.":
       withpath => true,
     }
     vcsrepo { $install_dir:

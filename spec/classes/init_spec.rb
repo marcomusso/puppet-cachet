@@ -70,6 +70,7 @@ describe 'cachet' do
           it { is_expected.to contain_exec('Install Cachet prerequisites') }
           it { is_expected.to contain_class('cachet::install') }
           it { is_expected.to contain_file('/etc/facter/facts.d/cachet_version.txt') }
+          it { is_expected.to contain_notify('Installing version v2.3.11.') }
 
           # cachet::config
           it { is_expected.to contain_file('/opt/cachet/database/database.sqlite') }
