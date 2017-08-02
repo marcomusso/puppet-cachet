@@ -43,9 +43,14 @@
 # [*mail_host*]
 #   String. Your email relay host.
 #
+# [*mail_address*]
+#   String. The email address from which Cachet will comminicate to subscribers. (default: null)
+#   If this is null no "Subscribe" button will appear in the main page.
+#
 
 class cachet (
   $mail_host         = $::cachet::params::mail_host,
+  $mail_address      = $::cachet::params::mail_address,
   $manage_repo       = $::cachet::params::manage_repo,
   $manage_apache     = $::cachet::params::manage_apache,
   $database_host     = $::cachet::params::database_host,
@@ -85,6 +90,7 @@ class cachet (
       sslcert     => $sslcert,
       sslchain    => $sslchain,
       install_dir => $install_dir,
+      require     => Class['::cachet::install'],
     }
   }
 
@@ -92,12 +98,15 @@ class cachet (
     server_name       => $server_name,
     install_dir       => $install_dir,
     mail_host         => $mail_host,
+    mail_address      => $mail_address,
     database_host     => $database_host,
     database_port     => $database_port,
     database_name     => $database_name,
     database_user     => $database_user,
     database_password => $database_password,
     database_prefix   => $database_prefix,
+    git_branch        => $git_branch,
+    require           => Class['::cachet::install'],
   }
 
   Class['::cachet::install'] -> Class['::cachet::config'] ~> Class['::cachet']

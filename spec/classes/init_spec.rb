@@ -14,7 +14,7 @@ describe 'cachet' do
               'server_name' => 'status.example.com',
               'install_dir' => '/opt/cachet',
               'repo_url'    => 'http://github.com/...',
-              'git_branch'  => 'v2.3.11',
+              'git_branch'  => 'v2.3.12',
             }
           end
           let(:facts) do
@@ -69,6 +69,8 @@ describe 'cachet' do
           it { is_expected.to contain_exec('Install Composer') }
           it { is_expected.to contain_exec('Install Cachet prerequisites') }
           it { is_expected.to contain_class('cachet::install') }
+          it { is_expected.to contain_file('/etc/facter/facts.d/cachet_version.txt') }
+          it { is_expected.to contain_notify('Installing version v2.3.12.') }
 
           # cachet::config
           it { is_expected.to contain_file('/opt/cachet/database/database.sqlite') }

@@ -58,11 +58,13 @@ It's pretty limited but it's a start.
       database_host     => 'mydatabasehost.example.com',
       database_port     => '5432',
       database_name     => 'my_status_page',
-      database_user     => 'my_status_page_ser',
+      database_user     => 'my_status_page_user',
       database_password => 'my_status_page_assword',
       sslkey            => 'my ssl key',
       sslcert           => 'my ssl cert',
       sslchain          => 'my ssl chain',
+      mail_host         => 'yourMailRelay.example.com',
+      mail_address      => 'yourFromEmailAddress@example.com',
     }
 
 You can avoid installing apache (and provide your own web server with php support) by setting `manage_apache => false` but if you do you need to supply you cert/key/chain file **contents** (not a path to a file!).
@@ -140,15 +142,20 @@ String. The actual SSL key to pass to Apache (probably you want to encrypt that 
 
 ##### sslcert
 
-String. The actual SSL cert to pass to Apache (probably you want to store that in hiera or in your module).
+String. The actual SSL cert to pass to Apache (probably you want to store that in hiera or in your calling module).
 
 ##### sslchain
 
-String. The optional SSL cert chain to pass to Apache (probably you want to store that in hiera or in your module).
+String. The optional SSL cert chain to pass to Apache (probably you want to store that in hiera or in your calling module).
 
-##### env_file
+##### mail_host
 
-String. Content of the env file (possibly coming from an erb from the calling manifest).
+String. Your email relay host.
+
+##### mail_address
+
+String. The email address from which Cachet will comminicate to subscribers. (default: null)
+If this is null no "Subscribe" button will appear in the main page.
 
 ## Limitations
 

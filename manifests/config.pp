@@ -12,7 +12,9 @@ class cachet::config(
   $database_user,
   $database_password,
   $database_prefix,
+  $git_branch,
   $mail_host,
+  $mail_address,
   ) {
 
   if $database_host != '' {

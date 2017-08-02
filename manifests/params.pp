@@ -10,7 +10,8 @@ class cachet::params {
       $manage_repo       = false
       $manage_apache     = true
       $app_key           = ''
-      $mail_host         = ''
+      $mail_host         = 'null'
+      $mail_address      = 'null'
       $sslkey            = 'my ssl key'
       $sslcert           = 'my ssl cert'
       $sslchain          = 'my ssl chain'
@@ -22,7 +23,7 @@ class cachet::params {
       $database_password = 'not_so_secret_password'
       $database_prefix   = 'null'  # include an optional separator if you want (ie 'myprefix_'), null means no prefix
       $repo_url          = 'https://github.com/cachethq/Cachet.git'
-      $git_branch        = 'v2.3.11'
+      $git_branch        = 'v2.3.12'
       $install_dir       = '/opt/cachet'
     }
     default: {
