@@ -36,14 +36,14 @@ class cachet::install(
     ensure => latest,
   }
   -> package { [
-    'mod_php71w',
-    'php71w-cli',
-    'php71w-gd',
-    'php71w-pdo',
-    'php71w-xml',
-    'php71w-pgsql',
-    'php71w-mbstring',
-    'php71w-opcache',
+    'mod_php72w',
+    'php72w-cli',
+    'php72w-gd',
+    'php72w-pdo',
+    'php72w-xml',
+    'php72w-pgsql',
+    'php72w-mbstring',
+    'php72w-opcache',
     ]:
     ensure => latest,
     notify => Class[Apache::Service],
