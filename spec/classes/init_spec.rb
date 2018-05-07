@@ -28,7 +28,7 @@ describe 'cachet' do
           it { is_expected.to contain_class('cachet::params') }
 
           # cachet::apache
-          it { is_expected.to contain_package('mod_php71w') }
+          it { is_expected.to contain_package('mod_php72w') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/mydomain.key') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/mydomain.crt') }
           it { is_expected.to contain_file('/etc/httpd/conf.d/chain.crt') }
@@ -58,13 +58,13 @@ describe 'cachet' do
           it { is_expected.to contain_package('curl') }
           it { is_expected.to contain_package('sqlite') }
           it { is_expected.to contain_package('postgresql96') }
-          it { is_expected.to contain_package('php71w-cli') }
-          it { is_expected.to contain_package('php71w-gd') }
-          it { is_expected.to contain_package('php71w-pdo') }
-          it { is_expected.to contain_package('php71w-xml') }
-          it { is_expected.to contain_package('php71w-pgsql') }
-          it { is_expected.to contain_package('php71w-mbstring') }
-          it { is_expected.to contain_package('php71w-opcache') }
+          it { is_expected.to contain_package('php72w-cli') }
+          it { is_expected.to contain_package('php72w-gd') }
+          it { is_expected.to contain_package('php72w-pdo') }
+          it { is_expected.to contain_package('php72w-xml') }
+          it { is_expected.to contain_package('php72w-pgsql') }
+          it { is_expected.to contain_package('php72w-mbstring') }
+          it { is_expected.to contain_package('php72w-opcache') }
           it { is_expected.to contain_vcsrepo('/opt/cachet').with_ensure('present') }
           it { is_expected.to contain_exec('Install Composer') }
           it { is_expected.to contain_exec('Install Cachet prerequisites') }

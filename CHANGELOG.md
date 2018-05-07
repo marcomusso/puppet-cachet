@@ -1,6 +1,10 @@
-## 2017-04-28 Release 0.2.0
+## Not yet released
 
 Support for upgrades and custom fact `cachet_version`.
+
+## 2018-05-07 Release 0.1.4
+
+Using php72.
 
 ## 2017-03-16 Release 0.1.3
 

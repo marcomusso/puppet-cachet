@@ -69,7 +69,7 @@ class cachet::install(
       group    => 'apache',
       require  => [
         Package['git'],
-        Package['mod_php71w'],
+        Package['mod_php72w'],
       ],
     }
     -> exec {'Update prerequisites':
@@ -106,7 +106,7 @@ class cachet::install(
       group    => 'apache',
       require  => [
         Package['git'],
-        Package['mod_php71w'],
+        Package['mod_php72w'],
       ],
     }
     -> exec { 'Install Composer':
