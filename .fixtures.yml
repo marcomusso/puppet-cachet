@@ -1,7 +1,9 @@
 fixtures:
   forge_modules:
     vcsrepo: 'puppetlabs/vcsrepo'
-    apache: 'puppetlabs/apache'
+    apache:
+      repo: 'puppetlabs/apache'
+      ref: '1.11.1'
     concat:
       repo: 'puppetlabs/concat'
       ref: '2.2.0'
