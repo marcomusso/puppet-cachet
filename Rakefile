@@ -37,6 +37,7 @@ PuppetLint.configuration.disable_class_inherits_from_params_class
 PuppetLint.configuration.disable_class_parameter_defaults
 PuppetLint.configuration.disable_arrow_on_right_operand_line
 PuppetLint.configuration.fail_on_warnings = true
+PuppetLint.configuration.send('disable_relative_classname_inclusion')
 
 PuppetLint::RakeTask.new :lint do |config|
   config.ignore_paths = exclude_paths

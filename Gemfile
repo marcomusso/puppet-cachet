@@ -7,7 +7,7 @@ group :test do
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
   gem "rspec-puppet-facts"
-  gem 'rubocop'
+  gem 'rubocop', '> 0.50'
 
   gem "puppet-lint-absolute_classname-check"
   gem "puppet-lint-leading_zero-check"
