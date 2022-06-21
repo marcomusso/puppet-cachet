@@ -1,5 +1,7 @@
 # puppet-cachet
 
+> Please note: this fork is not maintained anymore.
+
 #### Table of Contents
 
 1. [Overview](#overview)
